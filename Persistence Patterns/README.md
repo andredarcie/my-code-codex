@@ -8,6 +8,9 @@ Usar repositórios no .NET serve pra separar a regra de negócio de coisas como 
 
 Usar DbContext ou DbSet direto no domínio acopla sua lógica de negócio à infraestrutura, quebra os princípios do DDD e dificulta testes, manutenção e evolução do sistema.
 
+Fiz testes e minha conclusão pessoal foi:
+> Tentei evitar repositório criando interfaces pra `DbContext` e até `DbSet`, mas no fim o domínio continuava contaminado pelo EF Core, e ficou mais complicado do que simplesmente seguir o padrão certo desde o início.
+
 Interface/Contrato na camada de Domain  
 *Domain/Interfaces/IRepository.cs*
 ```csharp
