@@ -21,7 +21,7 @@ public interface IRepository<T> where T : BaseEntity
 }
 ```
 
-Implementação concreta na camada de infra:
+Implementação concreta na camada de infra:    
 *Infrastructure/Persistence/Repositories/Repository.cs*
 ```csharp
 public class Repository<T> : IRepository<T> where T : BaseEntity
