@@ -8,5 +8,39 @@ Usar repositórios no .NET serve pra separar a regra de negócio de coisas como 
 
 Usar DbContext ou DbSet direto no domínio acopla sua lógica de negócio à infraestrutura, quebra os princípios do DDD e dificulta testes, manutenção e evolução do sistema.
 
+Interface/Contrato na camada de Domain  
+*Domain/Interfaces/IRepository.cs*
 ```csharp
+public interface IRepository<T> where T : BaseEntity
+{
+    Task<T?> GetByIdAsync(Guid id);
+    Task<IEnumerable<T>> ListAsync();
+    Task AddAsync(T entity);
+    void Update(T entity);
+    void Delete(T entity);
+}
+```
+
+Implementação concreta na camada de infra:
+*Infrastructure/Persistence/Repositories/Repository.cs*
+```csharp
+public class Repository<T> : IRepository<T> where T : BaseEntity
+{
+    private readonly DbSet<T> _dbSet;
+
+    public Repository(AppDbContext context)
+    {
+        _dbSet = context.Set<T>();
+    }
+
+    public async Task AddAsync(T entity) => await _dbSet.AddAsync(entity);
+
+    public void Delete(T entity) => _dbSet.Remove(entity);
+
+    public async Task<T?> GetByIdAsync(Guid id) => await _dbSet.FindAsync(id);
+
+    public async Task<IEnumerable<T>> ListAsync() => await _dbSet.ToListAsync();
+
+    public void Update(T entity) => _dbSet.Update(entity);
+}
 ```
