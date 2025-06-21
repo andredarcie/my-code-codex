@@ -18,6 +18,8 @@ public interface IRepository<T> where T : BaseEntity
 {
     Task<T?> GetByIdAsync(Guid id);
     Task<IEnumerable<T>> ListAsync();
+    Task<T?> GetByIdNoTrackingAsync(Guid id);
+    Task<IEnumerable<T>> ListNoTrackingAsync();
     Task AddAsync(T entity);
     void Update(T entity);
     void Delete(T entity);
@@ -42,8 +44,18 @@ public class Repository<T> : IRepository<T> where T : BaseEntity
 
     public async Task<T?> GetByIdAsync(Guid id) => await _dbSet.FindAsync(id);
 
+    public async Task<T?> GetByIdNoTrackingAsync(Guid id) =>
+        await _dbSet.AsNoTracking().FirstOrDefaultAsync(e => e.Id == id);
+
     public async Task<IEnumerable<T>> ListAsync() => await _dbSet.ToListAsync();
+
+    public async Task<IEnumerable<T>> ListNoTrackingAsync() =>
+        await _dbSet.AsNoTracking().ToListAsync();
 
     public void Update(T entity) => _dbSet.Update(entity);
 }
 ```
+
+## Tracking
+
+Em projetos que seguem boas práticas de Clean Code e arquitetura limpa, é recomendado manter métodos separados para consultas com e sem tracking no repositório, usando nomes explícitos como `GetByIdAsync` e `GetByIdNoTrackingAsync`. Essa abordagem evita ambiguidade no código, facilita a leitura e reduz o risco de erros sutis causados por parâmetros booleanos como `track = false`, que alteram silenciosamente o comportamento de métodos. Além disso, separando os métodos, você favorece a clareza semântica e segue o princípio de que cada função deve ter uma responsabilidade única, conforme defendido por especialistas como Uncle Bob e adotado em projetos de referência como o eShopOnWeb da Microsoft.
