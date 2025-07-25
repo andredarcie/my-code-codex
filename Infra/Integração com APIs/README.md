@@ -39,11 +39,11 @@ Autenticação via Bearer Token
 Implemente retry, timeout, circuit breaker com Polly:
 
 ```csharp
-services.AddHttpClient("MinhaApi")
-    .AddTransientHttpErrorPolicy(p => 
-        p.WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(2)))
-    .AddTransientHttpErrorPolicy(p => 
-        p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
+.AddTransientHttpErrorPolicy(p => 
+    p.OrResult<HttpResponseMessage>(r => 
+        r.StatusCode == HttpStatusCode.RequestTimeout || 
+        (int)r.StatusCode >= 500)
+    .WaitAndRetryAsync(3, _ => TimeSpan.FromMilliseconds(200)));
 ```
 
 ### Retry (Tentativas Automáticas)
@@ -55,14 +55,41 @@ Se uma chamada falha (por ex. timeout, 500, etc.), ela é tentada de novo automa
 ```
 
 ## Contrato
-SLA significa Service Level Agreement — em português, Acordo de Nível de Serviço.
+O SLA (Service Level Agreement) serve para definir claramente as garantias de desempenho, disponibilidade e suporte de uma API, protegendo o cliente contra falhas e deixando explícito o que a empresa se compromete a entregar. Ele ajuda ao estabelecer expectativas concretas — como tempo de resposta, uptime mínimo e limites de requisição — e fornece base para cobranças, compensações e decisões técnicas, caso a API não funcione como prometido.
+
+Calculos:
+uptime = (tempo total - indisponibilidade) / tempo total
+
+### Stack
+```csharp
+[.NET API]
+   ↓
+[Serilog + Prometheus-net]
+   ↓
+[Prometheus ←→ Grafana]
+   ↓
+[Alertas configurados no Grafana]
+
++ NBomber para testes de SLA
++ Polly para resiliência
++ AspNetCoreRateLimit para controle de uso
+```
 
 Exemplo:
 ```csharp
-SLA da API de Pagamentos:
-- Disponibilidade: 99,95% mensal
-- Tempo máximo de resposta: 800ms (para 90% das requisições)
-- Tempo de resposta a chamados críticos: até 2h úteis
+{
+  "uptime": "99.9%",
+  "max_response_time_ms": 500,
+  "rate_limit": "1000 RPM",
+  "error_rate_max": "0.1%",
+  "support": {
+    "critical_response_time": "1h",
+    "standard_response_time": "24h"
+  },
+  "compensation": {
+    "uptime_below_99.5%": "10% service credit"
+  }
+}
 ```
 
 ### Timeouts realistas
@@ -81,3 +108,88 @@ Se o SLA diz que a API pode falhar em até 1% das requisições, configure retri
 ```
 
 Mais do que isso pode ser overkill ou agravar o problema com efeito cascata (ataque DDoS acidental).
+
+### Stack observabilidade FOSS para .NET
+
+```csharp
+version: '3.8'
+
+services:
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - monitoring
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    depends_on:
+      - prometheus
+    networks:
+      - monitoring
+
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    container_name: jaeger
+    ports:
+      - "16686:16686"   # UI
+      - "6831:6831/udp" # Agent UDP
+      - "14268:14268"   # Collector HTTP
+    networks:
+      - monitoring
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.10
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    ports:
+      - "9200:9200"
+    networks:
+      - monitoring
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.17.10
+    container_name: kibana
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+    networks:
+      - monitoring
+
+networks:
+  monitoring:
+    driver: bridge
+```
+
+### Ferramentas
+
+- Prometheus: coleta métricas da API (tempo, erros, uso).
+- Grafana: mostra gráficos e envia alertas com base nas métricas.
+- Jaeger: rastreia o caminho e tempo de execução das requisições.
+- Kibana: exibe logs da aplicação (erros, infos, etc.).
+
+### Cache de Dados
+Cache de chamadas externas (quando possível)
+APIs externas lentas ou com limite de uso devem ser cacheadas com política TTL.
+
+Sugestão:
+
+IMemoryCache ou IDistributedCache com hash da requisição como chave.
+
+Cache de 30s–5min já salva SLA e custo.
+
+### APIM
+Azure API Management
