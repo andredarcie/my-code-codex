@@ -19,7 +19,7 @@ Testes unitários com xUnit/NUnit, mocks com Moq, boas práticas, cobertura mín
 ## [Devops](/Devops)
 Docker, GitLab/GitHub Actions, buildspec.yml, versionamento, deploys e boas práticas de CI/CD.
 
-[Git](/Devops/Git.md) - Commits semânticos, branching strategies, rebase, merge, cherry-pick, etc.
+[git](/devops/git.md) - Commits semânticos, branching strategies, rebase, merge, cherry-pick, etc.
 
 ## [Security](/Security)
 Como proteger APIs, JWT, roles/claims, práticas contra SQL Injection, CSRF, etc.
