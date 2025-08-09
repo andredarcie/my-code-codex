@@ -1,6 +1,6 @@
 # Git
 
-Commit semântico
+## Commit semântico
 ```
 feat: add [feature-name]
 fix: resolve [issue-description]
@@ -12,7 +12,7 @@ test: add tests for [component-or-function-name]
 chore: update [dependency-or-config-name]
 ```
 
-Git Flow
+## Git Flow
 ```
 main → código pronto para produção.
 develop → código em desenvolvimento.
@@ -36,3 +36,11 @@ main  <---- hotfix ---->  main
          ↑
          feature
 ```
+
+## Semantic Versioning (SemVer)
+
+Formato: MAJOR.MINOR.PATCH  
+MAJOR: mudanças incompatíveis com versões anteriores (breaking changes).  
+MINOR: novas funcionalidades sem quebrar compatibilidade.  
+PATCH: correções e ajustes internos, sem alterar a API.  
+Tags Git: sempre marcar releases (git tag vX.Y.Z && git push origin vX.Y.Z).  
