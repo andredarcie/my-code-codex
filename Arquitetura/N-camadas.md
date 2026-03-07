@@ -7,15 +7,15 @@ Contém a lógica central e regras de negócio puras da aplicação, totalmente 
 
 Só depende de .NET puro (System.*). Nada de EF, nada de HTTP, nada de infra, nada de usar libs externas.
 
-- Entidade
-- ValueObject
-- Enum
-- Domain Service (Usado quando uma regra de negócio não pertence claramente a uma única entidade.)
+- Entidade (as invariantes de negócio vivem dentro dos seus métodos)
+- ValueObject (inclui enums de domínio quando carregam comportamento ou validação)
+- Domain Service (usado quando uma regra de negócio não pertence claramente a uma única entidade)
 - Repositorios (Interface)
 - Agregados (Aggregate Root)
 - Domain Events
-- Invariante de negócio (Dentro de métodos de entidade ou serviços de domínio.)
- 
+- Specification (encapsula regras de negócio reutilizáveis e combináveis)
+- Factory (responsável por criar Agregados complexos)
+
 # Application
 > Depende da Domain
 
@@ -24,27 +24,37 @@ Coordena os casos de uso da aplicação, orquestrando o domínio e definindo int
 - CasoDeUso
 - DTO
 - InterfaceDeServicoExterno
+- Integration Events
+- IEventPublisher (Interface)
+- IUnitOfWork (Interface)
+- ICacheService (Interface)
 
 Recomendo usar FluentResults  
 X Não indico usar AutoMapper / Mapster   
 X Não indico usar MediatR
 
 # Infra
-> Depende da Domain
+> Depende da Domain e da Application
 
 Implementa os contratos definidos nas camadas superiores, lidando com detalhes técnicos como persistência, serviços externos e infraestrutura.
 
 - DbContext
 - Repositorios (Implementação)
+- UnitOfWork (Implementação do IUnitOfWork)
+- CacheService (Implementação do ICacheService)
+- CachedRepository (Decorator do repositório)
 - ServicoExterno
+- EventPublisher (Implementação do IEventPublisher)
+- Consumers (ex: KafkaConsumer, recebe mensagem e chama CasoDeUso)
 
 ## Ferramentais Uteis
 - Entity Framework Core
 - Dapper (se for usar micro-ORM)
-- HttpClient / Refit – chamadas HTTP para serviços externos.
-- Serilog / NLog / log4net – logging.
-- SendGrid / MailKit / SmtpClient – envio de e-mail.
-- Polly – retry e resiliente para chamadas externas.
+- HttpClient / Refit : chamadas HTTP para serviços externos.
+- Serilog / NLog / log4net : logging.
+- SendGrid / MailKit / SmtpClient : envio de e-mail.
+- Polly : retry e resiliente para chamadas externas.
+- MassTransit / Confluent.Kafka : mensageria.
 
 # Presentation/API
 > Depende da Application
@@ -59,6 +69,65 @@ Expõe os recursos da aplicação ao mundo externo (ex: via HTTP), recebendo req
 ## Ferramentas Uteis
 - ASP.NET Core WebAPI
 - Swashbuckle.AspNetCore (Swagger)
-- FluentValidation – para validação automática de modelos.
-- JwtBearer – autenticação com JWT.
+- FluentValidation : para validação automática de modelos.
+- JwtBearer : autenticação com JWT.
 - ExceptionHandlerMiddleware
+
+# Diagrama
+
+<table border="1" cellpadding="12" cellspacing="0" width="100%">
+  <tr>
+    <td align="center" width="50%">
+      <strong>Presentation/API</strong><br><br>
+      <a href="./src/Presentation/Controllers/OrderController.cs">Controller</a><br>
+      <a href="./src/Presentation/DTOs/CreateOrderRequest.cs">Request / Response DTO</a><br>
+      <a href="./src/Presentation/Middlewares/ExceptionHandlerMiddleware.cs">Middleware</a>
+    </td>
+    <td align="center" width="50%">
+      <strong>Infra</strong><br><br>
+      <a href="./src/Infra/Persistence/AppDbContext.cs">DbContext</a><br>
+      <a href="./src/Infra/Repositories/OrderRepository.cs">Repositório (Implementação)</a><br>
+      <a href="./src/Infra/Persistence/UnitOfWork.cs">Unit of Work</a><br>
+      <a href="./src/Infra/Cache/CacheService.cs">Cache Service</a><br>
+      <a href="./src/Infra/Cache/CachedOrderRepository.cs">Cached Repository (Decorator)</a><br>
+      <a href="./src/Infra/Services/EmailService.cs">Serviço Externo</a><br>
+      <a href="./src/Infra/Messaging/EventPublisher.cs">Event Publisher</a><br>
+      <a href="./src/Infra/Messaging/KafkaConsumer.cs">Consumer (Kafka)</a>
+    </td>
+  </tr>
+</table>
+
+<div align="center">↓ &nbsp; ambos dependem &nbsp; ↓</div>
+
+<table border="1" cellpadding="12" cellspacing="0" width="100%">
+  <tr>
+    <td align="center">
+      <strong>Application</strong><br><br>
+      <a href="./src/Application/UseCases/CreateOrderUseCase.cs">Caso de Uso</a> &nbsp;·&nbsp;
+      <a href="./src/Application/UseCases/CreateOrderUseCase.cs">DTO</a> &nbsp;·&nbsp;
+      <a href="./src/Application/Events/OrderCreatedIntegrationEvent.cs">Integration Event</a> &nbsp;·&nbsp;
+      <a href="./src/Application/Interfaces/IEventPublisher.cs">Interface de Event Publisher</a> &nbsp;·&nbsp;
+      <a href="./src/Application/Interfaces/IEmailService.cs">Interface de Serviço Externo</a> &nbsp;·&nbsp;
+      <a href="./src/Application/Interfaces/IUnitOfWork.cs">IUnitOfWork</a> &nbsp;·&nbsp;
+      <a href="./src/Application/Interfaces/ICacheService.cs">ICacheService</a>
+    </td>
+  </tr>
+</table>
+
+<div align="center">↓ &nbsp; depende &nbsp; ↓</div>
+
+<table border="1" cellpadding="12" cellspacing="0" width="100%">
+  <tr>
+    <td align="center">
+      <strong>Domain</strong><br><br>
+      <a href="./src/Domain/Entities/Order.cs">Entidade</a> &nbsp;·&nbsp;
+      <a href="./src/Domain/ValueObjects/Money.cs">Value Object</a> &nbsp;·&nbsp;
+      <a href="./src/Domain/Entities/Order.cs">Agregado (Aggregate Root)</a> &nbsp;·&nbsp;
+      <a href="./src/Domain/Events/OrderCreatedEvent.cs">Domain Event</a> &nbsp;·&nbsp;
+      <a href="./src/Domain/Repositories/IOrderRepository.cs">Repositório (Interface)</a> &nbsp;·&nbsp;
+      <a href="./src/Domain/Services/OrderDomainService.cs">Domain Service</a> &nbsp;·&nbsp;
+      <a href="./src/Domain/Factories/OrderFactory.cs">Factory</a> &nbsp;·&nbsp;
+      <a href="./src/Domain/Specifications/OrderCanBeApprovedSpecification.cs">Specification</a>
+    </td>
+  </tr>
+</table>
