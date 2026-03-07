@@ -1,3 +1,8 @@
+# Order
+
+Agregado raiz. Contém as invariantes de negócio do pedido.
+
+```csharp
 namespace Domain.Entities;
 
 public class Order
@@ -50,3 +55,4 @@ public class Order
 
     public void ClearDomainEvents() => _domainEvents.Clear();
 }
+```

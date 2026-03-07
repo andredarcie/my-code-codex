@@ -1,6 +1,10 @@
+# KafkaConsumer
+
+Consumer do Kafka. Recebe a mensagem, desserializa e chama o caso de uso correspondente. A Application não sabe que Kafka existe.
+
+```csharp
 namespace Infra.Messaging;
 
-// Consumer: recebe mensagem do Kafka e chama o CasoDeUso correspondente
 public class KafkaConsumer : BackgroundService
 {
     private readonly IConsumer<string, string> _consumer;
@@ -30,3 +34,4 @@ public class KafkaConsumer : BackgroundService
         }
     }
 }
+```

@@ -1,3 +1,8 @@
+# OrderRepository
+
+Implementação do `IOrderRepository` usando Entity Framework Core. Não chama `SaveChanges`: quem commita é o `UnitOfWork`.
+
+```csharp
 namespace Infra.Repositories;
 
 public class OrderRepository : IOrderRepository
@@ -29,3 +34,4 @@ public class OrderRepository : IOrderRepository
         return Task.CompletedTask;
     }
 }
+```

@@ -1,6 +1,10 @@
+# OrderFactory
+
+Factory: centraliza a criação de Agregados complexos, mantendo o código do caso de uso limpo.
+
+```csharp
 namespace Domain.Factories;
 
-// Factory: centraliza a criação de Agregados complexos
 public class OrderFactory
 {
     public Order Create(string customerId, IEnumerable<(string ProductId, decimal Price, int Quantity)> items)
@@ -12,3 +16,4 @@ public class OrderFactory
         return Order.Create(customerId, orderItems);
     }
 }
+```

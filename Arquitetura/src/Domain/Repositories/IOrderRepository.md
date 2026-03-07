@@ -1,3 +1,8 @@
+# IOrderRepository
+
+Interface do repositório definida no Domain. A Infra implementa, o Domain define o contrato.
+
+```csharp
 namespace Domain.Repositories;
 
 public interface IOrderRepository
@@ -7,3 +12,4 @@ public interface IOrderRepository
     Task AddAsync(Order order, CancellationToken ct = default);
     Task UpdateAsync(Order order, CancellationToken ct = default);
 }
+```

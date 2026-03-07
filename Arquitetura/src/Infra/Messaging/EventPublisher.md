@@ -1,3 +1,8 @@
+# EventPublisher
+
+Implementação do `IEventPublisher` usando Kafka via `Confluent.Kafka`.
+
+```csharp
 namespace Infra.Messaging;
 
 public class EventPublisher : IEventPublisher
@@ -23,3 +28,4 @@ public class EventPublisher : IEventPublisher
         await _producer.ProduceAsync(_topic, message, ct);
     }
 }
+```

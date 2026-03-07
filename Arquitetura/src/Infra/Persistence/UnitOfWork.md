@@ -1,3 +1,8 @@
+# UnitOfWork
+
+Implementação do `IUnitOfWork`. Delega o commit para o `AppDbContext`.
+
+```csharp
 namespace Infra.Persistence;
 
 public class UnitOfWork : IUnitOfWork
@@ -12,3 +17,4 @@ public class UnitOfWork : IUnitOfWork
     public Task<int> CommitAsync(CancellationToken ct = default) =>
         _context.SaveChangesAsync(ct);
 }
+```

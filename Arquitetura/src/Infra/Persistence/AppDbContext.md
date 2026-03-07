@@ -1,3 +1,8 @@
+# AppDbContext
+
+DbContext do Entity Framework Core. Configura o mapeamento das entidades e ignora os Domain Events (não são persistidos).
+
+```csharp
 namespace Infra.Persistence;
 
 public class AppDbContext : DbContext
@@ -31,3 +36,4 @@ public class AppDbContext : DbContext
         });
     }
 }
+```

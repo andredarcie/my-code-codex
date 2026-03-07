@@ -1,3 +1,8 @@
+# ExceptionHandlerMiddleware
+
+Captura exceções globalmente. `DomainException` retorna `422`, demais erros retornam `500`.
+
+```csharp
 namespace Presentation.Middlewares;
 
 public class ExceptionHandlerMiddleware
@@ -31,3 +36,4 @@ public class ExceptionHandlerMiddleware
         }
     }
 }
+```

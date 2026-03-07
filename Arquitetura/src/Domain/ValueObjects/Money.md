@@ -1,6 +1,10 @@
+# Money
+
+Value Object: imutável, sem identidade, comparado por valor.
+
+```csharp
 namespace Domain.ValueObjects;
 
-// ValueObject: imutável, sem identidade, comparado por valor
 public sealed class Money
 {
     public decimal Amount { get; }
@@ -33,3 +37,4 @@ public sealed class Money
 
     public override string ToString() => $"{Currency} {Amount:F2}";
 }
+```

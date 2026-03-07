@@ -1,6 +1,10 @@
+# OrderCanBeApprovedSpecification
+
+Specification: encapsula uma regra de negócio reutilizável e combinável. Permite composição via `.And()`.
+
+```csharp
 namespace Domain.Specifications;
 
-// Specification: encapsula uma regra de negócio reutilizável e combinável
 public class OrderCanBeApprovedSpecification
 {
     public bool IsSatisfiedBy(Order order) =>
@@ -30,3 +34,4 @@ public class AndSpecification<T> : Specification<T>
     public override bool IsSatisfiedBy(T entity) =>
         _left.IsSatisfiedBy(entity) && _right.IsSatisfiedBy(entity);
 }
+```

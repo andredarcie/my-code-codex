@@ -1,3 +1,8 @@
+# OrderCreatedEvent
+
+Domain Event disparado quando um pedido é criado. É interno ao processo.
+
+```csharp
 namespace Domain.Events;
 
 public interface IDomainEvent
@@ -17,3 +22,4 @@ public sealed class OrderCreatedEvent : IDomainEvent
         CustomerId = customerId;
     }
 }
+```

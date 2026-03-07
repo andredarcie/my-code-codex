@@ -1,3 +1,8 @@
+# CreateOrderUseCase
+
+Caso de uso que orquestra a criação de um pedido. Coordena domínio, repositório, Unit of Work e publicação de eventos.
+
+```csharp
 namespace Application.UseCases;
 
 public record CreateOrderInput(string CustomerId, List<OrderItemInput> Items);
@@ -40,7 +45,7 @@ public class CreateOrderUseCase
 
         await _orderRepository.AddAsync(order, ct);
 
-        // Um único commit — tudo persiste junto ou nada persiste
+        // Um único commit: tudo persiste junto ou nada persiste
         await _unitOfWork.CommitAsync(ct);
 
         foreach (var domainEvent in order.DomainEvents)
@@ -54,3 +59,4 @@ public class CreateOrderUseCase
         return Result.Ok(new CreateOrderOutput(order.Id, order.Total));
     }
 }
+```

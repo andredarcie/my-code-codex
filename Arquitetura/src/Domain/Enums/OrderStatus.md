@@ -1,3 +1,8 @@
+# OrderStatus
+
+Enum que representa os estados possíveis de um pedido.
+
+```csharp
 namespace Domain.Entities;
 
 public enum OrderStatus
@@ -6,3 +11,4 @@ public enum OrderStatus
     Approved,
     Cancelled
 }
+```

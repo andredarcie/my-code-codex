@@ -1,3 +1,8 @@
+# OrderItem
+
+Entidade filha do agregado Order.
+
+```csharp
 namespace Domain.Entities;
 
 public class OrderItem
@@ -26,3 +31,4 @@ public class OrderItem
         };
     }
 }
+```

@@ -1,7 +1,10 @@
+# CachedOrderRepository
+
+Decorator do `IOrderRepository`. Adiciona cache transparentemente sem que o Domain ou Application saibam.
+
+```csharp
 namespace Infra.Cache;
 
-// Decorator: envolve o repositório real adicionando cache transparentemente
-// O domínio e a Application não sabem que cache existe
 public class CachedOrderRepository : IOrderRepository
 {
     private readonly IOrderRepository _inner;
@@ -31,7 +34,6 @@ public class CachedOrderRepository : IOrderRepository
     }
 
     public Task<IEnumerable<Order>> GetByCustomerIdAsync(string customerId, CancellationToken ct = default) =>
-        // Listas tendem a mudar com frequência — busca direto no banco
         _inner.GetByCustomerIdAsync(customerId, ct);
 
     public async Task AddAsync(Order order, CancellationToken ct = default)
@@ -46,3 +48,4 @@ public class CachedOrderRepository : IOrderRepository
         await _cache.RemoveAsync($"order:{order.Id}", ct);
     }
 }
+```

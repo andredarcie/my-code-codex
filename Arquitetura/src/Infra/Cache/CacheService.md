@@ -1,6 +1,10 @@
+# CacheService
+
+Implementação do `ICacheService` usando `IDistributedCache` (Redis). Pode ser trocado por MemoryCache sem alterar nada fora da Infra.
+
+```csharp
 namespace Infra.Cache;
 
-// Implementação usando Redis via IDistributedCache (pode trocar por MemoryCache sem mudar nada no resto)
 public class CacheService : ICacheService
 {
     private readonly IDistributedCache _cache;
@@ -26,3 +30,4 @@ public class CacheService : ICacheService
     public Task RemoveAsync(string key, CancellationToken ct = default) =>
         _cache.RemoveAsync(key, ct);
 }
+```

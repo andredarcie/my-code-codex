@@ -1,3 +1,8 @@
+# EmailService
+
+Implementação do `IEmailService` usando `SmtpClient`.
+
+```csharp
 namespace Infra.Services;
 
 public class EmailService : IEmailService
@@ -15,3 +20,4 @@ public class EmailService : IEmailService
         await _smtp.SendMailAsync(message, ct);
     }
 }
+```

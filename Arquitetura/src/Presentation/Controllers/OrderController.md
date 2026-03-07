@@ -1,3 +1,8 @@
+# OrderController
+
+Controller da API. Recebe a requisição HTTP, mapeia para o input do caso de uso e retorna o resultado.
+
+```csharp
 namespace Presentation.Controllers;
 
 [ApiController]
@@ -27,3 +32,4 @@ public class OrderController : ControllerBase
         return Created($"api/orders/{result.Value.OrderId}", result.Value);
     }
 }
+```
