@@ -79,20 +79,20 @@ Expõe os recursos da aplicação ao mundo externo (ex: via HTTP), recebendo req
   <tr>
     <td align="center" width="50%">
       <strong>Presentation/API</strong><br><br>
-      <a href="./src/Presentation/Controllers/OrderController.md">Controller</a><br>
-      <a href="./src/Presentation/DTOs/CreateOrderRequest.md">Request / Response DTO</a><br>
-      <a href="./src/Presentation/Middlewares/ExceptionHandlerMiddleware.md">Middleware</a>
+      <a href="./src/Presentation/Controllers/OrderController">Controller</a><br>
+      <a href="./src/Presentation/DTOs/CreateOrderRequest">Request / Response DTO</a><br>
+      <a href="./src/Presentation/Middlewares/ExceptionHandlerMiddleware">Middleware</a>
     </td>
     <td align="center" width="50%">
       <strong>Infra</strong><br><br>
-      <a href="./src/Infra/Persistence/AppDbContext.md">DbContext</a><br>
-      <a href="./src/Infra/Repositories/OrderRepository.md">Repositório (Implementação)</a><br>
-      <a href="./src/Infra/Persistence/UnitOfWork.md">Unit of Work</a><br>
-      <a href="./src/Infra/Cache/CacheService.md">Cache Service</a><br>
-      <a href="./src/Infra/Cache/CachedOrderRepository.md">Cached Repository (Decorator)</a><br>
-      <a href="./src/Infra/Services/EmailService.md">Serviço Externo</a><br>
-      <a href="./src/Infra/Messaging/EventPublisher.md">Event Publisher</a><br>
-      <a href="./src/Infra/Messaging/KafkaConsumer.md">Consumer (Kafka)</a>
+      <a href="./src/Infra/Persistence/AppDbContext">DbContext</a><br>
+      <a href="./src/Infra/Repositories/OrderRepository">Repositório (Implementação)</a><br>
+      <a href="./src/Infra/Persistence/UnitOfWork">Unit of Work</a><br>
+      <a href="./src/Infra/Cache/CacheService">Cache Service</a><br>
+      <a href="./src/Infra/Cache/CachedOrderRepository">Cached Repository (Decorator)</a><br>
+      <a href="./src/Infra/Services/EmailService">Serviço Externo</a><br>
+      <a href="./src/Infra/Messaging/EventPublisher">Event Publisher</a><br>
+      <a href="./src/Infra/Messaging/KafkaConsumer">Consumer (Kafka)</a>
     </td>
   </tr>
 </table>
@@ -103,13 +103,13 @@ Expõe os recursos da aplicação ao mundo externo (ex: via HTTP), recebendo req
   <tr>
     <td align="center">
       <strong>Application</strong><br><br>
-      <a href="./src/Application/UseCases/CreateOrderUseCase.md">Caso de Uso</a> &nbsp;·&nbsp;
-      <a href="./src/Application/UseCases/CreateOrderUseCase.md">DTO</a> &nbsp;·&nbsp;
-      <a href="./src/Application/Events/OrderCreatedIntegrationEvent.md">Integration Event</a> &nbsp;·&nbsp;
-      <a href="./src/Application/Interfaces/IEventPublisher.md">Interface de Event Publisher</a> &nbsp;·&nbsp;
-      <a href="./src/Application/Interfaces/IEmailService.md">Interface de Serviço Externo</a> &nbsp;·&nbsp;
-      <a href="./src/Application/Interfaces/IUnitOfWork.md">IUnitOfWork</a> &nbsp;·&nbsp;
-      <a href="./src/Application/Interfaces/ICacheService.md">ICacheService</a>
+      <a href="./src/Application/UseCases/CreateOrderUseCase">Caso de Uso</a> &nbsp;·&nbsp;
+      <a href="./src/Application/UseCases/CreateOrderUseCase">DTO</a> &nbsp;·&nbsp;
+      <a href="./src/Application/Events/OrderCreatedIntegrationEvent">Integration Event</a> &nbsp;·&nbsp;
+      <a href="./src/Application/Interfaces/IEventPublisher">Interface de Event Publisher</a> &nbsp;·&nbsp;
+      <a href="./src/Application/Interfaces/IEmailService">Interface de Serviço Externo</a> &nbsp;·&nbsp;
+      <a href="./src/Application/Interfaces/IUnitOfWork">IUnitOfWork</a> &nbsp;·&nbsp;
+      <a href="./src/Application/Interfaces/ICacheService">ICacheService</a>
     </td>
   </tr>
 </table>
@@ -120,14 +120,14 @@ Expõe os recursos da aplicação ao mundo externo (ex: via HTTP), recebendo req
   <tr>
     <td align="center">
       <strong>Domain</strong><br><br>
-      <a href="./src/Domain/Entities/Order.md">Entidade</a> &nbsp;·&nbsp;
-      <a href="./src/Domain/ValueObjects/Money.md">Value Object</a> &nbsp;·&nbsp;
-      <a href="./src/Domain/Entities/Order.md">Agregado (Aggregate Root)</a> &nbsp;·&nbsp;
-      <a href="./src/Domain/Events/OrderCreatedEvent.md">Domain Event</a> &nbsp;·&nbsp;
-      <a href="./src/Domain/Repositories/IOrderRepository.md">Repositório (Interface)</a> &nbsp;·&nbsp;
-      <a href="./src/Domain/Services/OrderDomainService.md">Domain Service</a> &nbsp;·&nbsp;
-      <a href="./src/Domain/Factories/OrderFactory.md">Factory</a> &nbsp;·&nbsp;
-      <a href="./src/Domain/Specifications/OrderCanBeApprovedSpecification.md">Specification</a>
+      <a href="./src/Domain/Entities/Order">Entidade</a> &nbsp;·&nbsp;
+      <a href="./src/Domain/ValueObjects/Money">Value Object</a> &nbsp;·&nbsp;
+      <a href="./src/Domain/Entities/Order">Agregado (Aggregate Root)</a> &nbsp;·&nbsp;
+      <a href="./src/Domain/Events/OrderCreatedEvent">Domain Event</a> &nbsp;·&nbsp;
+      <a href="./src/Domain/Repositories/IOrderRepository">Repositório (Interface)</a> &nbsp;·&nbsp;
+      <a href="./src/Domain/Services/OrderDomainService">Domain Service</a> &nbsp;·&nbsp;
+      <a href="./src/Domain/Factories/OrderFactory">Factory</a> &nbsp;·&nbsp;
+      <a href="./src/Domain/Specifications/OrderCanBeApprovedSpecification">Specification</a>
     </td>
   </tr>
 </table>
