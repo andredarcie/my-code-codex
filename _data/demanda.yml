@@ -1,0 +1,49 @@
+# Quantas vagas pedem cada requisito.
+# Fonte: Radar de vagas dev (andredarcie.github.io/job), 1.209 anúncios de 9 boards,
+# gerado em 2026-07-27, arquivo dados/ranking_requisitos.csv (colunas n_vagas e pct_geral).
+total: 1209
+coleta: julho de 2026
+fonte_url: https://andredarcie.github.io/job/
+
+itens:
+  apis_integracao:      { nome: "APIs e integrações", frase: "APIs e integrações", n: 670, pct: 55.4 }
+  banco_dados:          { nome: "Banco de dados e SQL", frase: "banco de dados e SQL", n: 645, pct: 53.3 }
+  trabalho_em_equipe:   { nome: "Trabalho em equipe", frase: "trabalho em equipe", n: 596, pct: 49.3 }
+  boas_praticas_codigo: { nome: "Clean code, SOLID e boas práticas", frase: "clean code, SOLID e boas práticas", n: 501, pct: 41.4 }
+  cloud:                { nome: "Cloud (AWS, Azure, GCP)", frase: "cloud (AWS, Azure ou GCP)", n: 500, pct: 41.4 }
+  arquitetura:          { nome: "Arquitetura e system design", frase: "arquitetura e system design", n: 481, pct: 39.8 }
+  versionamento:        { nome: "Git", frase: "Git", n: 450, pct: 37.2 }
+  comunicacao_geral:    { nome: "Comunicação", frase: "boa comunicação", n: 441, pct: 36.5 }
+  performance_escala:   { nome: "Performance e escala", frase: "performance e escala", n: 421, pct: 34.8 }
+  observabilidade:      { nome: "Observabilidade", frase: "observabilidade", n: 397, pct: 32.8 }
+  ci_cd:                { nome: "CI/CD", frase: "CI/CD", n: 386, pct: 31.9 }
+  containers:           { nome: "Containers e Kubernetes", frase: "containers ou Kubernetes", n: 345, pct: 28.5 }
+  testes_automatizados: { nome: "Testes automatizados e TDD", frase: "testes automatizados ou TDD", n: 299, pct: 24.7 }
+  mensageria_eventos:   { nome: "Mensageria e eventos", frase: "mensageria e eventos", n: 220, pct: 18.2 }
+  ingles:               { nome: "Inglês", frase: "inglês", n: 218, pct: 18.0 }
+  code_review:          { nome: "Code review", frase: "code review", n: 212, pct: 17.5 }
+  microservicos:        { nome: "Microsserviços", frase: "microsserviços", n: 201, pct: 16.6 }
+  seguranca:            { nome: "Segurança e conformidade", frase: "segurança e conformidade", n: 96, pct: 7.9 }
+  fundamentos_cs:       { nome: "Algoritmos e estruturas de dados", frase: "algoritmos e estruturas de dados", n: 63, pct: 5.2 }
+
+# A capa lista os requisitos nesta ordem (a das vagas), cada um com a página que o cobre.
+indice:
+  - { req: apis_integracao,      path: backend/README.md }
+  - { req: banco_dados,          path: Persistence Patterns/README.md }
+  - { req: trabalho_em_equipe,   path: soft-skills/README.md }
+  - { req: boas_praticas_codigo, path: design-patterns/README.md }
+  - { req: cloud,                path: cloud/README.md }
+  - { req: arquitetura,          path: Arquitetura/README.md }
+  - { req: versionamento,        path: dev-ops/git.md }
+  - { req: comunicacao_geral,    path: soft-skills/comunicacao.md }
+  - { req: performance_escala,   path: performance/README.md }
+  - { req: observabilidade,      path: observabilidade/README.md }
+  - { req: ci_cd,                path: dev-ops/ci-cd.md }
+  - { req: containers,           path: dev-ops/docker.md }
+  - { req: testes_automatizados, path: testes/README.md }
+  - { req: mensageria_eventos,   path: mensageria/README.md }
+  - { req: ingles,               path: carreira/README.md }
+  - { req: code_review,          path: soft-skills/code-review.md }
+  - { req: microservicos,        path: Arquitetura/microsservicos.md }
+  - { req: seguranca,            path: seguranca/README.md }
+  - { req: fundamentos_cs,       path: carreira/entrevistas.md }

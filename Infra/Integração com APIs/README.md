@@ -55,13 +55,13 @@ Se uma chamada falha (por ex. timeout, 500, etc.), ela é tentada de novo automa
 ```
 
 ## Contrato
-O SLA (Service Level Agreement) serve para definir claramente as garantias de desempenho, disponibilidade e suporte de uma API, protegendo o cliente contra falhas e deixando explícito o que a empresa se compromete a entregar. Ele ajuda ao estabelecer expectativas concretas — como tempo de resposta, uptime mínimo e limites de requisição — e fornece base para cobranças, compensações e decisões técnicas, caso a API não funcione como prometido.
+O SLA (Service Level Agreement) serve para definir claramente as garantias de desempenho, disponibilidade e suporte de uma API, protegendo o cliente contra falhas e deixando explícito o que a empresa se compromete a entregar. Ele ajuda ao estabelecer expectativas concretas (como tempo de resposta, uptime mínimo e limites de requisição) e fornece base para cobranças, compensações e decisões técnicas, caso a API não funcione como prometido.
 
 Calculos:
 uptime = (tempo total - indisponibilidade) / tempo total
 
 ### Stack
-```csharp
+```text
 [.NET API]
    ↓
 [Serilog + Prometheus-net]
@@ -76,7 +76,7 @@ uptime = (tempo total - indisponibilidade) / tempo total
 ```
 
 Exemplo:
-```csharp
+```json
 {
   "uptime": "99.9%",
   "max_response_time_ms": 500,
@@ -111,7 +111,7 @@ Mais do que isso pode ser overkill ou agravar o problema com efeito cascata (ata
 
 ### Stack observabilidade FOSS para .NET
 
-```csharp
+```yaml
 version: '3.8'
 
 services:
@@ -189,7 +189,38 @@ Sugestão:
 
 IMemoryCache ou IDistributedCache com hash da requisição como chave.
 
-Cache de 30s–5min já salva SLA e custo.
+Cache de 30s a 5min já salva SLA e custo.
 
 ### APIM
 Azure API Management
+
+## Resiliência no .NET moderno
+
+Desde o .NET 8, o pacote `Microsoft.Extensions.Http.Resilience` (construído sobre o Polly v8) traz uma configuração padrão com timeout total, retry com espera exponencial, circuit breaker e timeout por tentativa, numa linha:
+
+```csharp
+builder.Services.AddHttpClient<IMinhaApiService, MinhaApiService>(c =>
+        c.BaseAddress = new Uri("https://api.example.com"))
+    .AddStandardResilienceHandler();
+```
+
+E para ajustar ao SLA do parceiro:
+
+```csharp
+.AddStandardResilienceHandler(o =>
+{
+    o.AttemptTimeout.Timeout = TimeSpan.FromMilliseconds(800);
+    o.TotalRequestTimeout.Timeout = TimeSpan.FromSeconds(3);
+    o.Retry.MaxRetryAttempts = 2;
+});
+```
+
+É o que uso em projeto novo. As políticas com `AddTransientHttpErrorPolicy` acima usam a API antiga do Polly (v7), que você vai encontrar na maioria dos sistemas existentes.
+
+## O que perguntam em entrevista
+
+- Por que não instanciar `HttpClient` diretamente.
+- Diferença entre retry, timeout e circuit breaker, e em que ordem combinar.
+- Por que retry sem limite pode derrubar o parceiro (e você junto).
+- Como o SLA do parceiro influencia o seu timeout.
+- Quando cachear a resposta de uma API externa.

@@ -1,0 +1,49 @@
+# Barra lateral, na ordem de leitura. `path` é o arquivo-fonte: o layout descobre a URL.
+- grupo: Código
+  itens:
+    - { titulo: Backend com ASP.NET Core, path: backend/README.md }
+    - { titulo: APIs REST, path: backend/apis-rest.md }
+    - { titulo: ASP.NET Core na prática, path: backend/aspnet-core.md }
+    - { titulo: Clean code, path: design-patterns/README.md }
+    - { titulo: Princípios SOLID, path: design-patterns/solid.md }
+    - { titulo: Design patterns, path: design-patterns/padroes.md }
+- grupo: Arquitetura
+  itens:
+    - { titulo: Visão geral, path: Arquitetura/README.md }
+    - { titulo: N-camadas, path: Arquitetura/N-camadas.md }
+    - { titulo: Domain-Driven Design, path: Arquitetura/ddd.md }
+    - { titulo: Microsserviços, path: Arquitetura/microsservicos.md }
+    - { titulo: System design, path: Arquitetura/system-design.md }
+- grupo: Dados
+  itens:
+    - { titulo: Repository, path: Persistence Patterns/README.md }
+    - { titulo: EF Core, path: Persistence Patterns/ef-core.md }
+    - { titulo: Consultas SQL, path: Persistence Patterns/sql.md }
+- grupo: Integração
+  itens:
+    - { titulo: APIs externas, path: Infra/Integração com APIs/README.md }
+    - { titulo: Mensageria, path: mensageria/README.md }
+    - { titulo: Outbox e idempotência, path: mensageria/outbox-idempotencia.md }
+- grupo: Qualidade
+  itens:
+    - { titulo: Testes, path: testes/README.md }
+    - { titulo: Testes de integração, path: testes/integracao.md }
+    - { titulo: Segurança, path: seguranca/README.md }
+- grupo: Produção
+  itens:
+    - { titulo: Performance, path: performance/README.md }
+    - { titulo: Cache, path: performance/cache.md }
+    - { titulo: Observabilidade, path: observabilidade/README.md }
+    - { titulo: Cloud, path: cloud/README.md }
+    - { titulo: DevOps, path: dev-ops/README.md }
+    - { titulo: Git, path: dev-ops/git.md }
+    - { titulo: Docker e Kubernetes, path: dev-ops/docker.md }
+    - { titulo: Pipelines de CI/CD, path: dev-ops/ci-cd.md }
+- grupo: Carreira
+  itens:
+    - { titulo: Soft skills, path: soft-skills/README.md }
+    - { titulo: Comunicação escrita, path: soft-skills/comunicacao.md }
+    - { titulo: Code review, path: soft-skills/code-review.md }
+    - { titulo: O que as vagas pedem, path: carreira/README.md }
+    - { titulo: Entrevistas técnicas, path: carreira/entrevistas.md }
+    - { titulo: Referências, path: referencias/README.md }

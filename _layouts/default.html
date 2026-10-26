@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="{{ site.lang }}">
+<head>
+{% include head.html %}
+</head>
+<body class="doc">
+{% include topbar.html %}
+
+{%- comment -%} Achata a navegação para achar o anterior e o próximo. {%- endcomment -%}
+{%- assign flat = "" | split: "" -%}
+{%- for g in site.data.nav -%}{%- for i in g.itens -%}{%- assign flat = flat | push: i -%}{%- endfor -%}{%- endfor -%}
+{%- assign atual = -1 -%}
+{%- for i in flat -%}{%- if i.path == page.path -%}{%- assign atual = forloop.index0 -%}{%- endif -%}{%- endfor -%}
+
+<div class="container doc-grid">
+  <nav class="side" aria-label="Seções do guia">
+    <details class="side-menu" open>
+      <summary>Seções do guia</summary>
+      {%- for g in site.data.nav %}
+      <p class="side-group">{{ g.grupo }}</p>
+      <ul>
+        {%- for i in g.itens -%}
+        {%- assign alvo = site.pages | where: "path", i.path | first -%}
+        {%- if alvo %}
+        <li><a href="{{ alvo.url | relative_url }}"{% if i.path == page.path %} aria-current="page"{% endif %}>{{ i.titulo }}</a></li>
+        {%- endif -%}
+        {%- endfor %}
+      </ul>
+      {%- endfor %}
+    </details>
+  </nav>
+
+  <main id="conteudo" class="doc-main">
+    {%- if page.secao %}
+    <nav class="crumb" aria-label="Trilha"><a href="{{ '/' | relative_url }}#indice">Índice</a> <span aria-hidden="true">/</span> {{ page.secao }}</nav>
+    {%- endif %}
+    <article class="prose">
+{{ content }}
+    </article>
+
+    {%- if atual >= 0 %}
+    {%- assign ia = atual | minus: 1 -%}
+    {%- assign ip = atual | plus: 1 -%}
+    <nav class="pager" aria-label="Continuar lendo">
+      {%- if ia >= 0 -%}
+      {%- assign ant = flat[ia] -%}{%- assign antp = site.pages | where: "path", ant.path | first -%}
+      {%- if antp %}<a class="pager-prev" href="{{ antp.url | relative_url }}"><small>Anterior</small><span>{{ ant.titulo }}</span></a>{% endif -%}
+      {%- endif -%}
+      {%- if ip < flat.size -%}
+      {%- assign prox = flat[ip] -%}{%- assign proxp = site.pages | where: "path", prox.path | first -%}
+      {%- if proxp %}<a class="pager-next" href="{{ proxp.url | relative_url }}"><small>Próxima</small><span>{{ prox.titulo }}</span></a>{% endif -%}
+      {%- endif %}
+    </nav>
+    {%- endif %}
+  </main>
+
+  <aside class="rail" aria-label="Sobre esta página">
+    {%- assign d = site.data.demanda.itens[page.demanda] -%}
+    {%- if d %}
+    <div class="demand">
+      <p class="demand-figure num">{{ d.pct | round }}%</p>
+      <p class="demand-text">das {{ site.data.demanda.total | replace: "1209", "1.209" }} vagas analisadas pedem {{ d.frase }}.</p>
+      {% include meter.html pct=d.pct %}
+    </div>
+    {%- endif %}
+    <nav class="toc" aria-label="Nesta página" hidden>
+      <p class="toc-title">Nesta página</p>
+      <ol></ol>
+    </nav>
+  </aside>
+</div>
+
+{% include footer.html %}
+<script src="{{ '/assets/js/codex.js' | relative_url }}" defer></script>
+</body>
+</html>
