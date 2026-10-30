@@ -93,21 +93,64 @@ Com várias instâncias, dois workers podem pegar as mesmas linhas. Rode o publi
 
 A forma mais robusta é o **inbox**: registrar o id de cada mensagem processada, na mesma transação do efeito.
 
+### O erro comum: consultar antes de gravar
+
+```csharp
+// ERRADO: consultar e depois gravar não é atômico
+if (await db.MensagensProcessadas.AnyAsync(m => m.Id == mensagemId, ct))
+    return;
+
+db.Faturas.Add(Fatura.Para(evento.PedidoId, evento.Total));
+db.MensagensProcessadas.Add(new MensagemProcessada(mensagemId, DateTime.UtcNow));
+await db.SaveChangesAsync(ct);
+```
+
+Se a mesma mensagem chega a dois consumidores ao mesmo tempo (o broker reentregou, ou duas réplicas pegaram a mesma), as duas consultas rodam antes de qualquer `INSERT`, as duas respondem "não existe" e as duas seguem. A consulta é um *check-then-act*: entre o "verificar" e o "agir" existe uma janela em que o mundo muda. Nenhum `SELECT`, por mais rápido, fecha essa janela.
+
+### A garantia vem do banco, não da consulta
+
+Quem decide é a **chave primária** da tabela de mensagens processadas. O banco garante que só um `INSERT` com aquele id passa; o outro falha com violação de chave, e como a fatura está na mesma transação, ela volta junto. O consumidor trata essa falha como "já processada" e confirma a mensagem.
+
 ```csharp
 public async Task HandleAsync(PedidoCriado evento, Guid mensagemId, CancellationToken ct)
 {
-    if (await db.MensagensProcessadas.AnyAsync(m => m.Id == mensagemId, ct))
-        return; // já processada: ignora sem erro
-
-    var fatura = Fatura.Para(evento.PedidoId, evento.Total);
-    db.Faturas.Add(fatura);
     db.MensagensProcessadas.Add(new MensagemProcessada(mensagemId, DateTime.UtcNow));
+    db.Faturas.Add(Fatura.Para(evento.PedidoId, evento.Total));
 
-    await db.SaveChangesAsync(ct); // a fatura e o registro da mensagem, juntos
+    try
+    {
+        await db.SaveChangesAsync(ct); // um commit: o registro da mensagem e a fatura, ou nada
+    }
+    catch (DbUpdateException ex) when (ex.ViolouChaveUnica())
+    {
+        // outro consumidor gravou esta mensagem antes: nada a fazer, a mensagem pode ser confirmada
+    }
+}
+
+public static class DbUpdateExceptionExtensions
+{
+    // SQL Server: 2627 (PRIMARY KEY / UNIQUE constraint) e 2601 (índice único); PostgreSQL: 23505
+    public static bool ViolouChaveUnica(this DbUpdateException ex) => ex.InnerException switch
+    {
+        SqlException sql => sql.Number is 2627 or 2601,
+        PostgresException pg => pg.SqlState == PostgresErrorCodes.UniqueViolation,
+        _ => false
+    };
 }
 ```
 
-Uma chave primária na tabela de mensagens processadas resolve a corrida entre dois consumidores: o segundo `INSERT` falha e a transação dele volta.
+```csharp
+// no mapeamento: o id da mensagem É a chave primária
+modelBuilder.Entity<MensagemProcessada>().HasKey(m => m.Id);
+```
+
+O `AnyAsync` pode continuar antes do `INSERT` como atalho, para não montar a fatura à toa no caso comum de reentrega tardia. Mas ele é otimização, não garantia: o código tem de estar correto mesmo sem ele.
+
+Três cuidados:
+
+- **O `DbContext` fica sujo depois da falha.** As entidades continuam rastreadas como `Added`; não reaproveite a mesma instância para outra mensagem. Um escopo de DI por mensagem (o padrão do MassTransit e de um `BackgroundService` bem feito) resolve.
+- **Só vale para efeitos dentro do mesmo banco.** Se o handler manda e-mail ou chama uma API, a transação não desfaz isso. Aí a regra é: grave no banco (inclusive o registro da mensagem) e publique o efeito externo pelo [outbox](#transactional-outbox), ou use a chave de idempotência da API de destino (o header `Idempotency-Key` de gateways de pagamento, por exemplo).
+- **Isolamento não substitui a chave.** Subir para `SERIALIZABLE` também impede a duplicata, mas à custa de deadlocks e lock de faixa sob carga. A restrição única é mais barata e mais clara.
 
 Outras formas de idempotência, quando o inbox é pesado demais:
 
@@ -119,7 +162,7 @@ Outras formas de idempotência, quando o inbox é pesado demais:
 
 - Evento gravado na mesma transação do dado (outbox).
 - Todo evento tem um id único e estável entre reenvios.
-- Consumidor registra o que processou ou tem restrição única no efeito.
+- Consumidor registra o que processou ou tem restrição única no efeito, e a garantia é a restrição do banco, nunca um `SELECT` antes do `INSERT`.
 - Retry com espera crescente e dead letter para o que nunca vai passar.
 - Métrica do tamanho do outbox pendente e da DLQ, com alerta.
 
@@ -128,4 +171,5 @@ Outras formas de idempotência, quando o inbox é pesado demais:
 - Como garantir que salvar no banco e publicar o evento aconteçam juntos.
 - O que é o outbox pattern e qual garantia ele dá.
 - Como tornar um consumidor idempotente.
+- Por que "consultar se já existe e depois gravar" não garante idempotência com dois consumidores ao mesmo tempo.
 - Por que "exactly once" é tão difícil na prática.
