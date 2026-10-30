@@ -191,8 +191,105 @@ IMemoryCache ou IDistributedCache com hash da requisição como chave.
 
 Cache de 30s a 5min já salva SLA e custo.
 
-### APIM
-Azure API Management
+### APIM (Azure API Management)
+
+O Azure API Management é um gateway gerenciado que fica entre quem chama e quem responde. Em vez de cada serviço falar direto com a API do parceiro, todos falam com o APIM, e ele encaminha. Serve nos dois sentidos:
+
+- **Saída (consumir APIs externas):** um ponto só para as credenciais do parceiro, o limite de chamadas que o contrato permite, o cache e o log de tudo que sai. Trocar de fornecedor ou de URL vira mudança de configuração no gateway, não deploy em cinco serviços.
+- **Entrada (expor as suas APIs):** autenticação, rate limit por cliente, versões e um portal de documentação para quem consome, sem reescrever isso em cada API.
+
+#### As peças
+
+| Peça | O que é |
+| --- | --- |
+| API | a definição importada do OpenAPI, apontando para o backend real |
+| Operação | cada endpoint da API, com as próprias políticas se precisar |
+| Produto | um pacote de APIs que se publica junto, com termos de uso |
+| Assinatura | a chave que dá acesso a um produto, enviada no header `Ocp-Apim-Subscription-Key` |
+| Named value | configuração e segredos usados nas políticas, de preferência referenciando o Key Vault |
+| Backend | o destino real, com URL, credencial e circuit breaker configurados uma vez |
+| Revisão e versão | revisão muda sem quebrar quem consome; versão (`v1`, `v2`) é contrato novo |
+
+#### Políticas
+
+O comportamento é configurado em políticas XML, que rodam em quatro momentos: `inbound` (chegando), `backend` (indo para o destino), `outbound` (voltando) e `on-error`. Elas se aplicam em escopo global, de produto, de API ou de operação, e o `<base />` decide onde entra a política do escopo de cima.
+
+Um exemplo de saída para um parceiro com limite de chamadas e resposta cacheável:
+
+{% raw %}
+```xml
+<policies>
+    <inbound>
+        <base />
+        <!-- quem chama se identifica com Entra ID, não com a chave do parceiro -->
+        <validate-jwt header-name="Authorization" failed-validation-httpcode="401">
+            <openid-config url="https://login.microsoftonline.com/{tenant}/v2.0/.well-known/openid-configuration" />
+            <audiences><audience>api://gateway-parceiros</audience></audiences>
+        </validate-jwt>
+        <!-- o contrato do parceiro permite 100 chamadas por minuto: o gateway segura antes -->
+        <rate-limit-by-key calls="100" renewal-period="60" counter-key="parceiro-frete" />
+        <cache-lookup vary-by-developer="false" vary-by-developer-groups="false" />
+        <set-backend-service backend-id="parceiro-frete" />
+        <!-- a chave do parceiro vem do Key Vault e nunca passa pelo código da aplicação -->
+        <set-header name="x-api-key" exists-action="override">
+            <value>{{parceiro-frete-api-key}}</value>
+        </set-header>
+    </inbound>
+    <backend>
+        <retry condition="@(context.Response.StatusCode >= 500)" count="2" interval="1" first-fast-retry="true">
+            <forward-request timeout="5" />
+        </retry>
+    </backend>
+    <outbound>
+        <base />
+        <cache-store duration="120" />
+    </outbound>
+    <on-error>
+        <base />
+    </on-error>
+</policies>
+```
+{% endraw %}
+
+Outras políticas que uso com frequência: `quota-by-key` (limite por dia ou mês, não por minuto), `authentication-managed-identity` (o APIM chama um backend Azure com a própria identidade, sem segredo), `set-query-parameter` e `set-body` (adaptar o contrato do parceiro ao seu), `mock-response` (devolver um exemplo enquanto o backend não existe) e `ip-filter`.
+
+#### Como fica no código
+
+Do lado da aplicação, nada muda além da URL base e da autenticação: o `HttpClient` tipado aponta para o APIM em vez do parceiro, e o Polly continua valendo para falhas entre a aplicação e o gateway.
+
+```csharp
+builder.Services.AddHttpClient<IFreteClient, FreteClient>(c =>
+{
+    c.BaseAddress = new Uri(builder.Configuration["Apim:BaseUrl"]!); // https://minha-empresa.azure-api.net/frete/
+    c.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", builder.Configuration["Apim:SubscriptionKey"]);
+})
+.AddStandardResilienceHandler();
+```
+
+Cuidado com retry nos dois lugares: se o APIM já tenta de novo e a aplicação também, uma falha vira até nove chamadas ao parceiro. Escolha um lugar para o retry (eu deixo no gateway quando o backend é externo) e, na aplicação, só timeout e circuit breaker.
+
+#### Observabilidade
+
+O APIM manda log e métricas para o Application Insights e o Azure Monitor: latência do gateway separada da latência do backend, erros por operação e por assinatura. É a primeira coisa que olho quando um parceiro "está lento": o gráfico mostra se o tempo está no gateway ou do lado de lá.
+
+#### Camadas (tiers)
+
+| Tier | Quando |
+| --- | --- |
+| Developer | desenvolvimento e testes; não tem SLA, não usar em produção |
+| Consumption | serverless, cobra por chamada; bom para tráfego baixo ou irregular, mas sem rede privada e com cold start |
+| Basic v2 e Standard v2 | produção comum; o Standard v2 integra com VNet para falar com backends privados |
+| Premium (e Premium v2) | várias regiões, zonas de disponibilidade, VNet completa e gateway self-hosted |
+
+O gateway self-hosted é um container do APIM que roda no seu Kubernetes ou on-premises, controlado pelo mesmo portal: útil quando o backend não pode sair da rede interna.
+
+#### Quando não usar
+
+- **Um serviço só, chamando uma API só:** o `HttpClient` com Polly resolve, e o APIM vira custo e um salto de rede a mais.
+- **Comunicação entre microsserviços dentro do cluster:** gateway é para a borda. Lá dentro, chamada direta, service mesh ou YARP.
+- **Regra de negócio:** política é para segurança, roteamento e adaptação de contrato. Lógica de domínio escondida em XML de gateway não tem teste, não tem code review decente e ninguém acha depois.
+
+Alternativas: YARP (proxy reverso em .NET, dentro da sua aplicação), AWS API Gateway, Kong e o Application Gateway do Azure, que é balanceador com WAF e não gerencia APIs.
 
 ## Resiliência no .NET moderno
 
@@ -224,3 +321,5 @@ E para ajustar ao SLA do parceiro:
 - Por que retry sem limite pode derrubar o parceiro (e você junto).
 - Como o SLA do parceiro influencia o seu timeout.
 - Quando cachear a resposta de uma API externa.
+- Para que serve um API gateway como o Azure API Management, e quando ele é exagero.
+- Onde colocar o retry quando existe um gateway entre a aplicação e o parceiro.
