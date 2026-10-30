@@ -1,6 +1,6 @@
 # Clean code
 
-Clean code, SOLID e boas práticas aparecem em quatro de cada dez vagas. O que a vaga quer dizer com isso é simples: código que outra pessoa lê, entende e altera sem medo. Não é sobre seguir regra cega, é sobre reduzir o custo da próxima mudança.
+Clean code, SOLID e boas práticas querem dizer uma coisa simples: código que outra pessoa lê, entende e altera sem medo. Não é sobre seguir regra cega, é sobre reduzir o custo da próxima mudança.
 
 Nesta seção:
 

@@ -1,6 +1,6 @@
 # Performance
 
-Performance e escala aparecem em uma de cada três vagas. O que se espera não é micro-otimização: é saber medir, achar o gargalo de verdade e não criar os problemas clássicos que derrubam API sob carga.
+Em performance e escala, o que se espera não é micro-otimização: é saber medir, achar o gargalo de verdade e não criar os problemas clássicos que derrubam API sob carga.
 
 ## Meça antes de otimizar
 

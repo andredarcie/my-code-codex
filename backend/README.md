@@ -1,6 +1,6 @@
 # Backend com ASP.NET Core
 
-APIs e integrações são o requisito mais citado nas vagas que analisei: mais da metade pede. Na prática isso quer dizer saber desenhar um contrato HTTP que outro time consegue consumir sem te chamar no Slack, e saber montar a aplicação por trás dele sem virar um emaranhado.
+APIs e integrações são o centro do trabalho backend. Na prática isso quer dizer saber desenhar um contrato HTTP que outro time consegue consumir sem te chamar no Slack, e saber montar a aplicação por trás dele sem virar um emaranhado.
 
 Esta seção cobre as duas coisas:
 
@@ -18,9 +18,9 @@ A organização das camadas está em [Arquitetura N-Camadas](../Arquitetura/N-ca
 - Logs estruturados e health check, para alguém conseguir operar o serviço às três da manhã.
 - Testes de integração cobrindo os endpoints principais.
 
-## Stack que mais aparece nas vagas .NET
+## A stack que eu uso
 
-| Camada | O que costuma pedir |
+| Camada | Ferramentas |
 | --- | --- |
 | API | ASP.NET Core Web API, Minimal APIs, OpenAPI |
 | Dados | EF Core, Dapper, SQL Server ou PostgreSQL |

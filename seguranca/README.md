@@ -1,6 +1,6 @@
 # Segurança
 
-Segurança aparece explicitamente em menos de uma em cada dez vagas, mas é cobrada em todas: num code review, numa auditoria ou num incidente. Em banco e fintech, junto com a LGPD, é pré-requisito. O ponto de partida é o [OWASP API Security Top 10](https://owasp.org/API-Security/): a maioria dos ataques a APIs cai em poucas categorias.
+Segurança raramente vem escrita na descrição da tarefa, mas é cobrada sempre: num code review, numa auditoria ou num incidente. Em banco e fintech, junto com a LGPD, é pré-requisito. O ponto de partida é o [OWASP API Security Top 10](https://owasp.org/API-Security/): a maioria dos ataques a APIs cai em poucas categorias.
 
 ## Autenticação com JWT
 

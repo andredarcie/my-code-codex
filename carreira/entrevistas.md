@@ -1,6 +1,6 @@
 # Entrevistas técnicas
 
-O processo para vaga .NET no Brasil costuma ter quatro etapas. Saber o que cada uma avalia muda como você se prepara.
+O processo seletivo para dev .NET no Brasil costuma ter quatro etapas. Saber o que cada uma avalia muda como você se prepara.
 
 ## 1. Triagem com o RH
 
@@ -12,7 +12,7 @@ Avalia: pretensão salarial, disponibilidade, modelo de trabalho, comunicação.
 
 ## 2. Entrevista técnica conversada
 
-Avalia: profundidade nos fundamentos que a vaga pede. As perguntas mais comuns estão no fim de cada página do guia, agrupadas por tema:
+Avalia: profundidade nos fundamentos do dia a dia do time. As perguntas mais comuns estão no fim de cada página do guia, agrupadas por tema:
 
 - [APIs REST](../backend/apis-rest.md) e [ASP.NET Core](../backend/aspnet-core.md)
 - [EF Core](../Persistence%20Patterns/ef-core) e [SQL](../Persistence%20Patterns/sql)
@@ -29,7 +29,7 @@ Os formatos mais comuns:
 
 - **Live coding:** um problema pequeno, compartilhando a tela. Pense em voz alta, pergunte sobre os casos de borda antes de codar, comece pela solução simples e melhore depois. Avaliam como você pensa, não só se termina.
 - **Desafio para casa:** uma API pequena em alguns dias. Entregue menos funcionalidade com mais qualidade: testes, README com as decisões e como rodar, Docker Compose. Quem avalia abre o README primeiro.
-- **Algoritmos:** só 5% dos anúncios citam, mas empresas grandes e vagas internacionais ainda usam. Os temas que mais caem: arrays e strings, hash maps, dois ponteiros, pilha e fila, árvores e grafos com BFS e DFS, e saber dizer a complexidade (Big O) da sua solução.
+- **Algoritmos:** o dia a dia de backend quase não usa, mas empresas grandes e processos internacionais ainda cobram. Os temas que mais caem: arrays e strings, hash maps, dois ponteiros, pilha e fila, árvores e grafos com BFS e DFS, e saber dizer a complexidade (Big O) da sua solução.
 
 ```csharp
 // Clássico: dois números que somam o alvo. O(n) com dicionário em vez de O(n²) com dois laços.
@@ -65,4 +65,4 @@ A entrevista é dos dois lados. Perguntas que dizem muito sobre o time:
 
 ## Depois da entrevista
 
-Anote o que perguntaram e o que você não soube. Em três processos você tem o mapa do que estudar, e ele quase sempre bate com o ranking da [página das vagas](./).
+Anote o que perguntaram e o que você não soube. Em três processos você tem o mapa do que estudar.

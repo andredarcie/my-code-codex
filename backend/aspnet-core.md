@@ -76,7 +76,7 @@ Injete `IOptions<T>` quando o valor não muda, `IOptionsSnapshot<T>` (scoped) pa
 As duas formas são suportadas e performam de forma parecida. A escolha é de organização:
 
 - **Minimal APIs**: menos cerimônia, ótimas para serviços pequenos e microsserviços. Organize com `MapGroup` e um arquivo de endpoints por recurso, senão o `Program.cs` vira um monolito.
-- **Controllers**: ainda dominam os sistemas legados que você vai encontrar nas empresas, e muita vaga pede experiência com eles.
+- **Controllers**: ainda dominam os sistemas legados que você vai encontrar nas empresas, então vale dominar os dois estilos.
 
 ```csharp
 public static class PedidosEndpoints

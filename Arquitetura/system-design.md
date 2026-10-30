@@ -1,6 +1,6 @@
 # System design
 
-Arquitetura e system design aparecem em quatro de cada dez vagas, e quase toda entrevista para sênior tem uma rodada de "desenhe um sistema que...". O objetivo não é chegar na resposta certa: é mostrar que você pergunta antes de desenhar, conhece as peças e sabe o preço de cada uma.
+Quase toda entrevista para sênior tem uma rodada de "desenhe um sistema que...", e o mesmo raciocínio serve para a reunião em que o time decide uma arquitetura de verdade. O objetivo não é chegar na resposta certa: é mostrar que você pergunta antes de desenhar, conhece as peças e sabe o preço de cada uma.
 
 ## Roteiro para a entrevista
 
@@ -8,7 +8,7 @@ Arquitetura e system design aparecem em quatro de cada dez vagas, e quase toda e
 2. **Requisitos não funcionais:** quantos usuários, quantas requisições por segundo, latência aceitável, consistência ou disponibilidade, quanto tempo guardar os dados.
 3. **Estimativa de ordem de grandeza:** leituras e escritas por segundo, volume de dados por ano.
 4. **Desenho de alto nível:** cliente, API, serviços, banco, cache, fila.
-5. **Aprofundar o ponto crítico:** o entrevistador vai puxar um gargalo. É aqui que se ganha a vaga.
+5. **Aprofundar o ponto crítico:** o entrevistador vai puxar um gargalo. É aqui que se mostra profundidade.
 6. **Trade-offs:** diga o que você sacrificou e por quê.
 
 ## Contas de guardanapo

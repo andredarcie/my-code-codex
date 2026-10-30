@@ -55,14 +55,6 @@
   </main>
 
   <aside class="rail" aria-label="Sobre esta página">
-    {%- assign d = site.data.demanda.itens[page.demanda] -%}
-    {%- if d %}
-    <div class="demand">
-      <p class="demand-figure num">{{ d.pct | round }}%</p>
-      <p class="demand-text">das {{ site.data.demanda.total | replace: "1209", "1.209" }} vagas analisadas pedem {{ d.frase }}.</p>
-      {% include meter.html pct=d.pct %}
-    </div>
-    {%- endif %}
     <nav class="toc" aria-label="Nesta página" hidden>
       <p class="toc-title">Nesta página</p>
       <ol></ol>

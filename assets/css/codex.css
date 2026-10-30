@@ -1,9 +1,8 @@
 /* Hallmark · shape: Index-First (/), Long Document com trilho lateral (artigos) · genre: modern-minimal · theme: Cobalt (deal 1/3, seed guia-pessoal-engenharia-backend-24ca·58e30b13·2026-10-26·r0) · redesign: full
- * hero: Index (/), none (artigos) · nav: edge-aligned, o wordmark e dois links · footer: colophon block · imagery: o produto (o C# do próprio guia), sem fotografias · signature: o livro-razão de demanda, cada requisito com a fatia das 1.209 vagas num medidor de 50 células
+ * hero: Index (/), none (artigos) · nav: edge-aligned, o wordmark e dois links · footer: colophon block · imagery: o produto (o C# do próprio guia), sem fotografias · signature: o índice numerado, cada página do guia numa linha
  * axes: light/grotesk-sans/cool · posture: restrained · contrast: tokens do tema, sem render · fold: planejado para 1280 x 800, sem render · v2.0.0 */
 /* Hallmark · pre-emit critique: P4 H4 E3 S5 R4 V4 · weakest: E, o repositório não roda navegador nem sloplint --render; a varredura foi estática, à mão, e o fold ficou planejado e não medido */
-/* Hallmark · answered F15 · o gap de 96px separa colunas de seção na capa; 24px e 64px são o espaço dentro das linhas do livro-razão e entre os trilhos da página de leitura, outra página */
-/* Hallmark · waive 82 · medidor de 50 células com cheias e vazias em cores diferentes · cada célula vale 2% das 1.209 vagas, o medidor é a leitura do dado e não um enfeite */
+/* Hallmark · answered F15 · o gap de 96px separa colunas de seção na capa; 24px e 64px são o espaço dentro das linhas do índice e entre os trilhos da página de leitura, outra página */
 @import url("./tokens.css");
 @import url("./base.css");
 
@@ -93,18 +92,7 @@
   box-shadow: var(--shadow-key-accent);
 }
 
-/* ---------- Medidor: 50 células, 2% cada ---------- */
-.meter {
-  display: grid;
-  grid-template-columns: repeat(50, minmax(0, 1fr));
-  gap: var(--space-3xs);
-  width: 100%;
-  max-width: 400px;
-}
-.meter i { display: block; height: 10px; border-radius: 1px; background: var(--color-glyph-1); }
-.meter i.on { background: var(--color-accent); }
-
-/* ---------- Capa: o livro-razão ---------- */
+/* ---------- Capa: o índice ---------- */
 .ledger-hero { padding-block: var(--space-2xl) var(--section-gap-s); }
 .ledger-grid {
   display: grid;
@@ -225,13 +213,6 @@
 }
 
 /* ---------- Capa: fonte dos números ---------- */
-.source { background: var(--color-paper-2); padding-block: var(--section-gap-s); }
-.source-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--space-3xl); }
-.source-body { display: grid; gap: var(--space-md); }
-.source-body .lead { max-width: 40ch; }
-.source-body a { text-decoration-color: var(--color-rule-2); }
-.source-body a:hover { text-decoration-color: var(--color-accent); }
-@media (max-width: 60rem) { .source-grid { grid-template-columns: minmax(0, 1fr); gap: var(--space-lg); } }
 
 /* ---------- Código (Rouge) ---------- */
 pre, code, kbd { font-family: var(--font-outlier); }
@@ -319,17 +300,6 @@ pre, code, kbd { font-family: var(--font-outlier); }
 .crumb a:hover { text-decoration-color: var(--color-accent); }
 
 .rail { position: sticky; top: var(--space-lg); display: grid; gap: var(--space-xl); }
-.demand { display: grid; gap: var(--space-xs); padding-bottom: var(--space-lg); border-bottom: var(--rule-hair) solid var(--color-rule); }
-.demand-figure {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: var(--text-3xl);
-  letter-spacing: var(--tracking-display);
-  line-height: 1;
-  font-variant-numeric: tabular-nums;
-}
-.demand-text { font-size: var(--text-sm); color: var(--color-ink-2); }
-.demand .meter { margin-top: var(--space-xs); }
 .toc-title { font-family: var(--font-display); font-weight: 500; font-size: var(--text-sm); color: var(--color-muted); margin-bottom: var(--space-xs); }
 .toc ol { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-2xs); }
 .toc a { display: block; padding-block: var(--space-3xs); font-size: var(--text-sm); line-height: 1.4; color: var(--color-muted); text-decoration: none; }

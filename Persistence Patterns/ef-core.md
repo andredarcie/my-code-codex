@@ -1,6 +1,6 @@
 # EF Core
 
-Banco de dados aparece em mais da metade das vagas, e em .NET isso quase sempre significa EF Core no dia a dia e Dapper onde o desempenho aperta. O EF Core é produtivo, mas esconde o SQL: quem não olha o SQL gerado descobre os problemas em produção.
+Em .NET, banco de dados quase sempre significa EF Core no dia a dia e Dapper onde o desempenho aperta. O EF Core é produtivo, mas esconde o SQL: quem não olha o SQL gerado descobre os problemas em produção.
 
 ## Veja o SQL que ele gera
 

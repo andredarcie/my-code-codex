@@ -1,6 +1,0 @@
-{%- comment -%} Medidor de 50 células, cada uma 2% das vagas. Parâmetro: include.pct.
-O número já aparece em texto ao lado, então o medidor fica fora da árvore de acessibilidade. {%- endcomment -%}
-{%- assign cheias = include.pct | divided_by: 2.0 | round -%}
-<span class="meter" aria-hidden="true">
-  {%- for i in (1..50) -%}<i{% if i <= cheias %} class="on"{% endif %}></i>{%- endfor -%}
-</span>

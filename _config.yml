@@ -1,5 +1,5 @@
 title: My Code Codex
-description: Guia de engenharia backend .NET de André N. Darcie, ordenado pelo que as vagas pedem.
+description: As boas práticas de engenharia backend .NET que André N. Darcie usa no dia a dia.
 lang: pt-BR
 author: André N. Darcie
 repository: andredarcie/my-code-codex
@@ -33,45 +33,39 @@ exclude:
   - README.md
   - LICENSE
 
-# A seção de cada pasta diz qual requisito das vagas ela cobre (_data/demanda.yml).
+# A seção de cada pasta (a trilha no topo da página).
 defaults:
   - scope: { path: "" }
     values: { layout: default }
   - scope: { path: "Arquitetura" }
-    values: { demanda: arquitetura, secao: Arquitetura }
-  - scope: { path: "Arquitetura/microsservicos.md" }
-    values: { demanda: microservicos }
+    values: { secao: Arquitetura }
   - scope: { path: "backend" }
-    values: { demanda: apis_integracao, secao: Backend }
+    values: { secao: Backend }
   - scope: { path: "Infra" }
-    values: { demanda: apis_integracao, secao: Integrações }
+    values: { secao: Integrações }
   - scope: { path: "Acesso a API Externa.md" }
-    values: { demanda: apis_integracao, secao: Integrações, title: Acesso a API externa }
+    values: { secao: Integrações, title: Acesso a API externa }
   - scope: { path: "Persistence Patterns" }
-    values: { demanda: banco_dados, secao: Persistência }
+    values: { secao: Persistência }
   - scope: { path: "design-patterns" }
-    values: { demanda: boas_praticas_codigo, secao: Design patterns }
+    values: { secao: Design patterns }
   - scope: { path: "testes" }
-    values: { demanda: testes_automatizados, secao: Testes }
+    values: { secao: Testes }
   - scope: { path: "seguranca" }
-    values: { demanda: seguranca, secao: Segurança }
+    values: { secao: Segurança }
   - scope: { path: "performance" }
-    values: { demanda: performance_escala, secao: Performance }
+    values: { secao: Performance }
   - scope: { path: "observabilidade" }
-    values: { demanda: observabilidade, secao: Observabilidade }
+    values: { secao: Observabilidade }
   - scope: { path: "mensageria" }
-    values: { demanda: mensageria_eventos, secao: Mensageria }
+    values: { secao: Mensageria }
   - scope: { path: "cloud" }
-    values: { demanda: cloud, secao: Cloud }
+    values: { secao: Cloud }
   - scope: { path: "dev-ops" }
-    values: { demanda: ci_cd, secao: DevOps }
-  - scope: { path: "dev-ops/git.md" }
-    values: { demanda: versionamento }
-  - scope: { path: "dev-ops/docker.md" }
-    values: { demanda: containers }
+    values: { secao: DevOps }
   - scope: { path: "soft-skills" }
-    values: { demanda: trabalho_em_equipe, secao: Soft skills }
+    values: { secao: Soft skills }
   - scope: { path: "carreira" }
-    values: { demanda: ingles, secao: Carreira }
+    values: { secao: Carreira }
   - scope: { path: "referencias" }
     values: { secao: Referências }

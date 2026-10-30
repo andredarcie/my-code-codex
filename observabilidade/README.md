@@ -1,6 +1,6 @@
 # Observabilidade
 
-Um terço das vagas pede observabilidade, e quem já ficou de plantão entende o motivo: sem ela, um incidente vira adivinhação. Observabilidade é conseguir responder "por que está lento para este cliente agora?" sem fazer deploy de log novo.
+Quem já ficou de plantão sabe por que observabilidade importa: sem ela, um incidente vira adivinhação. Observabilidade é conseguir responder "por que está lento para este cliente agora?" sem fazer deploy de log novo.
 
 ## Os três sinais
 
@@ -10,7 +10,7 @@ Um terço das vagas pede observabilidade, e quem já ficou de plantão entende o
 | **Métricas** | quanto, com que frequência, quão rápido | Prometheus e Grafana, Azure Monitor, CloudWatch |
 | **Traces** | por onde a requisição passou e quanto tempo em cada parte | Jaeger, Tempo, Zipkin, Application Insights |
 
-Datadog, New Relic, Dynatrace e Application Insights juntam os três numa plataforma paga, e aparecem muito nas vagas.
+Datadog, New Relic, Dynatrace e Application Insights juntam os três numa plataforma paga, e são comuns nas empresas.
 
 ## OpenTelemetry: o padrão
 

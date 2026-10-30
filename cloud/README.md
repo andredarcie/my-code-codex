@@ -1,6 +1,6 @@
 # Cloud
 
-Cloud aparece em quatro de cada dez vagas, empatada com clean code. Ninguém espera que um dev backend seja especialista em infraestrutura, mas espera que saiba publicar o próprio serviço, escolher o recurso certo e não deixar uma conta de cinco dígitos no fim do mês.
+Hoje quase todo serviço roda em cloud. Ninguém espera que um dev backend seja especialista em infraestrutura, mas espera que saiba publicar o próprio serviço, escolher o recurso certo e não deixar uma conta de cinco dígitos no fim do mês.
 
 ## Azure ou AWS
 

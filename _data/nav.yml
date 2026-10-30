@@ -44,6 +44,6 @@
     - { titulo: Soft skills, path: soft-skills/README.md }
     - { titulo: Comunicação escrita, path: soft-skills/comunicacao.md }
     - { titulo: Code review, path: soft-skills/code-review.md }
-    - { titulo: O que as vagas pedem, path: carreira/README.md }
+    - { titulo: Carreira, path: carreira/README.md }
     - { titulo: Entrevistas técnicas, path: carreira/entrevistas.md }
     - { titulo: Referências, path: referencias/README.md }

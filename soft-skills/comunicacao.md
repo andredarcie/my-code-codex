@@ -1,6 +1,6 @@
 # Comunicação escrita
 
-Em time remoto, a maior parte do trabalho acontece por escrito: o PR, o ticket, a mensagem no chat, o documento de decisão. Escrever bem é a habilidade que mais multiplica o resto, e uma das que mais aparece nas vagas (comunicação em mais de um terço, documentação técnica em uma de cada cinco).
+Em time remoto, a maior parte do trabalho acontece por escrito: o PR, o ticket, a mensagem no chat, o documento de decisão. Escrever bem é a habilidade que mais multiplica o resto.
 
 ## Descrição de pull request
 

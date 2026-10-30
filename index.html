@@ -1,9 +1,8 @@
 ---
 layout: home
 title: My Code Codex
-description: Guia de engenharia backend .NET de André N. Darcie, ordenado pelo que 1.209 vagas de desenvolvedor pedem.
+description: As boas práticas de engenharia backend .NET que André N. Darcie usa no dia a dia.
 ---
-{%- assign dm = site.data.demanda -%}
 {%- assign flat = "" | split: "" -%}
 {%- for g in site.data.nav -%}{%- for i in g.itens -%}{%- assign flat = flat | push: i -%}{%- endfor -%}{%- endfor -%}
 {%- assign primeira = site.pages | where: "path", "backend/README.md" | first -%}
@@ -12,30 +11,28 @@ description: Guia de engenharia backend .NET de André N. Darcie, ordenado pelo 
 <section class="ledger-hero" aria-labelledby="titulo">
   <div class="container ledger-grid">
     <div class="ledger-head">
-      <h1 id="titulo">O guia .NET que as vagas cobram</h1>
-      <p class="lead">Meu guia de engenharia backend, ordenado pelo que {{ dm.total | replace: "1209", "1.209" }} vagas pedem.</p>
+      <h1 id="titulo">Como eu faço backend em .NET</h1>
+      <p class="lead">As boas práticas que eu uso no dia a dia: código, arquitetura, dados, produção e o trabalho em time.</p>
       <p class="ledger-action"><a class="key key--primary" href="{{ primeira.url | relative_url }}">Começar pelas APIs</a></p>
-      <p class="ledger-note">Cada linha é um requisito, com a fatia de vagas que o cita e a página do guia que o cobre.</p>
+      <p class="ledger-note">Cada linha é uma página do guia, na ordem de leitura.</p>
     </div>
 
-    <ol class="ledger" id="indice" aria-label="Requisitos das vagas e onde cada um está no guia">
-      {%- for linha in dm.indice -%}
-      {%- assign r = dm.itens[linha.req] -%}
-      {%- assign alvo = site.pages | where: "path", linha.path | first -%}
-      {%- assign titulo = "" -%}
-      {%- for i in flat -%}{%- if i.path == linha.path -%}{%- assign titulo = i.titulo -%}{%- endif -%}{%- endfor -%}
+    <ol class="ledger" id="indice" aria-label="Páginas do guia, na ordem de leitura">
+      {%- assign n = 0 -%}
+      {%- for g in site.data.nav -%}
+      {%- for i in g.itens -%}
+      {%- assign alvo = site.pages | where: "path", i.path | first -%}
       {%- if alvo %}
-      <li class="ledger-row{% if forloop.first %} ledger-row--lead{% endif %}">
+      {%- assign n = n | plus: 1 %}
+      <li class="ledger-row{% if n == 1 %} ledger-row--lead{% endif %}">
         <a href="{{ alvo.url | relative_url }}">
-          <span class="ledger-pct num">{{ r.pct | round }}%</span>
-          <span class="ledger-req">
-            <span class="ledger-name">{{ r.nome }}</span>
-            {% include meter.html pct=r.pct %}
-          </span>
-          <span class="ledger-page">{{ titulo }}</span>
+          <span class="ledger-pct num">{% if n < 10 %}0{% endif %}{{ n }}</span>
+          <span class="ledger-req"><span class="ledger-name">{{ i.titulo }}</span></span>
+          <span class="ledger-page">{{ g.grupo }}</span>
         </a>
       </li>
       {%- endif -%}
+      {%- endfor -%}
       {%- endfor %}
     </ol>
   </div>
@@ -128,16 +125,5 @@ return Result.Ok(new CreateOrderOutput(order.Id, order.Total));
       </figure>
     </div>
     <p class="band-link"><a href="{{ camadas.url | relative_url }}">Ver as quatro camadas e os 27 arquivos de código do exemplo</a></p>
-  </div>
-</section>
-
-<section class="source" aria-labelledby="fonte">
-  <div class="container source-grid">
-    <h2 id="fonte">De onde vêm os números</h2>
-    <div class="source-body">
-      <p class="lead">{{ dm.total | replace: "1209", "1.209" }} anúncios de 9 boards, reunidos em {{ dm.coleta }} e lidos à procura de 50 requisitos.</p>
-      <p>O radar mede o que as vagas pedem além da stack, então C# e .NET ficam de fora da conta: eles são o ponto de partida. Uma vaga pode pedir vários requisitos, por isso as porcentagens não somam 100.</p>
-      <p><a href="{{ dm.fonte_url }}">Abrir o Radar de vagas dev</a></p>
-    </div>
   </div>
 </section>

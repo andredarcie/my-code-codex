@@ -1,6 +1,6 @@
 # Soft skills
 
-Trabalho em equipe é o terceiro requisito mais citado nas vagas, à frente de cloud e de arquitetura, e comunicação aparece em mais de um terço delas. Na entrevista comportamental e na avaliação de desempenho, é isso que separa o pleno do sênior: o código costuma ser parecido, o impacto no time não.
+Trabalho em equipe e comunicação pesam tanto quanto a técnica. Na entrevista comportamental e na avaliação de desempenho, é isso que separa o pleno do sênior: o código costuma ser parecido, o impacto no time não.
 
 - [Comunicação escrita](./comunicacao.md): descrição de PR, ADR, mensagem assíncrona e post-mortem.
 - [Code review](./code-review.md): como revisar e como receber revisão.
@@ -15,7 +15,7 @@ Trabalho em equipe é o terceiro requisito mais citado nas vagas, à frente de c
 
 ## Ownership
 
-Senso de dono aparece em uma de cada cinco vagas. Na prática:
+Senso de dono, na prática:
 
 - O ticket fechado não é o fim. O fim é a funcionalidade funcionando em produção, com o usuário usando.
 - Viu algo quebrado fora do seu escopo? Avise ou abra o ticket; não passe reto.
@@ -36,7 +36,7 @@ Senso de dono aparece em uma de cada cinco vagas. Na prática:
 
 ## Mentoria
 
-Uma de cada seis vagas pede mentorar outras pessoas. Pareamento, revisão de código com explicação, deixar o júnior apresentar a solução que construiu. O sênior que é o único que sabe mexer no sistema não é sênior: é um ponto único de falha.
+Mentorar outras pessoas faz parte do trabalho do sênior. Pareamento, revisão de código com explicação, deixar o júnior apresentar a solução que construiu. O sênior que é o único que sabe mexer no sistema não é sênior: é um ponto único de falha.
 
 ## O que perguntam em entrevista
 

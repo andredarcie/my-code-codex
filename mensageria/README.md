@@ -1,6 +1,6 @@
 # Mensageria
 
-Mensageria aparece em menos vagas que APIs, mas em quase todas as de empresa grande, banco e fintech: é onde o sistema deixa de ser um request esperando outro. Também é onde mais aparecem bugs difíceis, porque mensagem duplica, atrasa e chega fora de ordem.
+Mensageria aparece em quase todo sistema de empresa grande, banco e fintech: é onde o sistema deixa de ser um request esperando outro. Também é onde mais aparecem bugs difíceis, porque mensagem duplica, atrasa e chega fora de ordem.
 
 ## Fila ou tópico
 
@@ -18,7 +18,7 @@ Comando é imperativo e tem um dono (`GerarNotaFiscal`). Evento é passado e nã
 | Ordem | garantida dentro da partição | por fila, com um consumidor | com sessions | FIFO opcional |
 | Reprocessar | sim, voltando o offset | não, a mensagem sai da fila | não | não |
 
-No mercado financeiro brasileiro, Kafka domina. Em empresas na Azure, Service Bus. Saber o conceito vale mais que a ferramenta: os problemas são os mesmos.
+Nos bancos e fintechs brasileiros, Kafka domina. Em empresas na Azure, Service Bus. Saber o conceito vale mais que a ferramenta: os problemas são os mesmos.
 
 ## As garantias de entrega
 

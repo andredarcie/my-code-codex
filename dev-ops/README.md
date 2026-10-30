@@ -1,6 +1,6 @@
 # DevOps
 
-Docker, pipelines, versionamento, deploys e boas práticas de CI/CD. Git aparece em mais de um terço das vagas, CI/CD em quase um terço e containers em mais de um quarto. A cultura por trás é uma só: quem escreve o código também é responsável por ele chegar e se manter em produção.
+Docker, pipelines, versionamento, deploys e boas práticas de CI/CD. A cultura por trás é uma só: quem escreve o código também é responsável por ele chegar e se manter em produção.
 
 - [Git](./git.md): commits semânticos, Git Flow, trunk-based, SemVer e o que esperam de um pull request.
 - [Docker e Kubernetes](./docker.md): Dockerfile multi-stage para .NET, imagem enxuta e o mínimo de Kubernetes que um dev backend precisa saber.

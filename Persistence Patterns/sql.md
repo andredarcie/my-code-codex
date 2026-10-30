@@ -1,6 +1,6 @@
 # SQL
 
-ORM não dispensa SQL. Quem sabe ler um plano de execução resolve em dez minutos o incidente que o resto do time investiga por dois dias. Os exemplos usam SQL Server, o banco mais comum nas vagas .NET no Brasil; o raciocínio vale para PostgreSQL.
+ORM não dispensa SQL. Quem sabe ler um plano de execução resolve em dez minutos o incidente que o resto do time investiga por dois dias. Os exemplos usam SQL Server, o banco mais comum nos sistemas .NET no Brasil; o raciocínio vale para PostgreSQL.
 
 ## Índices
 

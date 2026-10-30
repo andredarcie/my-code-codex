@@ -1,6 +1,6 @@
 # Testes
 
-Testes automatizados aparecem em uma de cada quatro vagas, e em quatro de cada dez das vagas em português. Com agentes de IA escrevendo código, teste deixou de ser opcional: é a única forma de saber se o que foi gerado faz o que deveria. Escrevi sobre isso em [TDD Is No Longer Optional in the World of AI Agents](https://dev.to/andredarcie/tdd-is-no-longer-optional-in-the-world-of-ai-agents-5b1e).
+Com agentes de IA escrevendo código, teste deixou de ser opcional: é a única forma de saber se o que foi gerado faz o que deveria. Escrevi sobre isso em [TDD Is No Longer Optional in the World of AI Agents](https://dev.to/andredarcie/tdd-is-no-longer-optional-in-the-world-of-ai-agents-5b1e).
 
 ## A pirâmide, na prática
 
@@ -14,7 +14,7 @@ Em backend, os testes de integração da API são os que mais me dão confiança
 
 | Para | Uso | Observação |
 | --- | --- | --- |
-| Framework | xUnit | o mais comum nas vagas; NUnit e MSTest resolvem igual |
+| Framework | xUnit | o mais usado em .NET; NUnit e MSTest resolvem igual |
 | Dublês | NSubstitute | sintaxe limpa; o Moq continua muito presente nos projetos legados |
 | Asserções | Shouldly ou asserts do xUnit | o FluentAssertions passou a ter licença comercial na versão 8 (2025) |
 | Integração | `WebApplicationFactory` + Testcontainers | banco real, descartável |

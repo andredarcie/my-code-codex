@@ -1,6 +1,6 @@
 # Code review
 
-Code review aparece em uma de cada seis vagas, e em quase toda empresa é rotina diária. É onde o conhecimento circula, onde o bug é pego mais barato e onde o seu jeito de trabalhar em equipe fica mais visível. Tenho skills de revisão automatizada para agentes de IA em [My Skills](https://andredarcie.github.io/my-skills/); o roteiro abaixo é o mesmo que uso como revisor humano.
+Em quase toda empresa, code review é rotina diária. É onde o conhecimento circula, onde o bug é pego mais barato e onde o seu jeito de trabalhar em equipe fica mais visível. Tenho skills de revisão automatizada para agentes de IA em [My Skills](https://andredarcie.github.io/my-skills/); o roteiro abaixo é o mesmo que uso como revisor humano.
 
 ## Como revisar
 

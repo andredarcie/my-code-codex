@@ -1,6 +1,6 @@
 # Docker e Kubernetes
 
-Containers aparecem em mais de um quarto das vagas. Do dev backend se espera escrever um Dockerfile decente, rodar as dependências locais com Compose e entender o suficiente de Kubernetes para não brigar com quem opera o cluster.
+Do dev backend se espera escrever um Dockerfile decente, rodar as dependências locais com Compose e entender o suficiente de Kubernetes para não brigar com quem opera o cluster.
 
 ## Dockerfile multi-stage para .NET
 
